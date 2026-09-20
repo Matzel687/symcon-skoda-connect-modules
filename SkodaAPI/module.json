@@ -8,10 +8,10 @@
   ],
   "parentRequirements": [],
   "childRequirements": [
-    "{B6230A89-942D-510C-C23E-0C2E3D456782}",
-    "{C7341B90-053E-621D-D34F-1D3F4E567893}",
-    "{D8452CA1-164F-732E-E450-2E4F5F678904}"
+    "{A5129F78-831C-409B-B12D-9B1D2C345671}"
   ],
-  "implemented": [],
+  "implemented": [
+    "{A5129F78-831C-409B-B12D-9B1D2C345671}"
+  ],
   "prefix": "SKODA"
 }
