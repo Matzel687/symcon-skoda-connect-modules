@@ -43,7 +43,7 @@ class SkodaStatus extends IPSModule
 
         $status = $payload['status'] ?? $payload;
         $this->SetBuffer('status', json_encode($status));
-        $this->UpdateVisualizationValue('status', $status);
+        $this->UpdateVisualizationValue($status);
     }
 
     public function UpdateData(): void

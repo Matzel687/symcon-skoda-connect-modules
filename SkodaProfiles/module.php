@@ -43,7 +43,7 @@ class SkodaProfiles extends IPSModule
 
         $profiles = $payload['chargingProfiles'] ?? $payload;
         $this->SetBuffer('chargingProfiles', json_encode($profiles));
-        $this->UpdateVisualizationValue('chargingProfiles', $profiles);
+        $this->UpdateVisualizationValue($profiles);
     }
 
     public function UpdateData(): void

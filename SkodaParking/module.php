@@ -50,7 +50,7 @@ class SkodaParking extends IPSModule
 
         $parking = $payload['parkingPosition'] ?? $payload;
         $this->SetBuffer('parkingPosition', json_encode($parking));
-        $this->UpdateVisualizationValue('parkingPosition', $parking);
+        $this->UpdateVisualizationValue($parking);
     }
 
     public function UpdateData(): void
