@@ -5,13 +5,66 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skoda Profiles</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 12px; background: transparent; color: #fff; }
-        .card { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px; text-align: center; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: transparent;
+            color: #e2e8f0;
+            font-size: 12px;
+        }
+        .card {
+            background: rgba(15, 23, 42, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 3px 0;
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+        }
+        .label { color: #cbd5e1; }
+        .value { color: #f8fafc; font-weight: 600; text-align: right; word-break: break-word; }
+        .list {
+            margin: 8px 0 0 0;
+            padding-left: 14px;
+            color: #f8fafc;
+        }
     </style>
 </head>
 <body>
     <div class="card">
-        <h3>Skoda Profiles Tile Visu</h3>
+        <div class="title">Skoda Profiles</div>
+        <div class="row"><span class="label">Aktiv:</span><span class="value" id="currentProfile">-</span></div>
+        <div class="row"><span class="label">Ziel-SoC:</span><span class="value" id="targetSoc">-</span></div>
+        <ul class="list" id="profileList"></ul>
     </div>
+
+    <script>
+        function handleMessage(message) {
+            const profiles = message && message.chargingProfiles ? message.chargingProfiles : message;
+            const current = profiles && profiles.currentVehiclePositionProfile ? profiles.currentVehiclePositionProfile : {};
+            document.getElementById('currentProfile').innerText = current && current.name ? current.name : '-';
+            document.getElementById('targetSoc').innerText = current && current.targetStateOfChargeInPercent !== undefined ? current.targetStateOfChargeInPercent + '%' : '-';
+
+            const list = document.getElementById('profileList');
+            list.innerHTML = '';
+            const items = (profiles && Array.isArray(profiles.profiles) ? profiles.profiles : (Array.isArray(profiles) ? profiles : []));
+            items.forEach(profile => {
+                const li = document.createElement('li');
+                li.innerText = (profile && profile.name ? profile.name : 'Unbenannt') + ' (' + (profile && profile.settings && profile.settings.targetStateOfChargeInPercent !== undefined ? profile.settings.targetStateOfChargeInPercent + '%' : '-')) + ')';
+                list.appendChild(li);
+            });
+        }
+    </script>
 </body>
 </html>

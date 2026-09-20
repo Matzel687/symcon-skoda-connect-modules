@@ -5,13 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skoda Status</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 12px; background: transparent; color: #fff; }
-        .card { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px; text-align: center; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            margin: 0;
+            padding: 10px;
+            background: transparent;
+            color: #e2e8f0;
+            font-size: 12px;
+        }
+        .card {
+            background: rgba(15, 23, 42, 0.82);
+            border: 1px solid rgba(148, 163, 184, 0.4);
+            border-radius: 8px;
+            padding: 10px;
+        }
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #38bdf8;
+            margin-bottom: 8px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            gap: 8px;
+            padding: 3px 0;
+            border-bottom: 1px dashed rgba(148, 163, 184, 0.2);
+        }
+        .label { color: #cbd5e1; }
+        .value { color: #f8fafc; font-weight: 600; text-align: right; }
     </style>
 </head>
 <body>
     <div class="card">
-        <h3>Skoda Status Tile Visu</h3>
+        <div class="title">Skoda Status</div>
+        <div class="row"><span class="label">Doors Locked:</span><span class="value" id="doorsLocked">-</span></div>
+        <div class="row"><span class="label">Locked:</span><span class="value" id="locked">-</span></div>
+        <div class="row"><span class="label">Doors:</span><span class="value" id="doors">-</span></div>
+        <div class="row"><span class="label">Windows:</span><span class="value" id="windows">-</span></div>
+        <div class="row"><span class="label">Lights:</span><span class="value" id="lights">-</span></div>
+        <div class="row"><span class="label">Reliable Lock:</span><span class="value" id="reliableLockStatus">-</span></div>
     </div>
+
+    <script>
+        function handleMessage(message) {
+            const status = message && message.status ? message.status : message;
+            const overall = status && status.overall ? status.overall : status;
+            document.getElementById('doorsLocked').innerText = overall && overall.doorsLocked ? overall.doorsLocked : '-';
+            document.getElementById('locked').innerText = overall && overall.locked ? overall.locked : '-';
+            document.getElementById('doors').innerText = overall && overall.doors ? overall.doors : '-';
+            document.getElementById('windows').innerText = overall && overall.windows ? overall.windows : '-';
+            document.getElementById('lights').innerText = overall && overall.lights ? overall.lights : '-';
+            document.getElementById('reliableLockStatus').innerText = overall && overall.reliableLockStatus ? overall.reliableLockStatus : '-';
+        }
+    </script>
 </body>
 </html>

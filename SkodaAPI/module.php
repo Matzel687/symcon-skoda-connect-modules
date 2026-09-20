@@ -42,6 +42,9 @@ class SkodaAPI extends IPSModule
         // Register Dynamic Variable Profiles
         $this->RegisterCustomProfiles();
 
+        // Enable custom HTML visualization
+        $this->SetVisualizationType(1);
+
         // Setup Polling Timer
         $this->RegisterTimer('UpdateDataTimer', 0, 'SKODA_UpdateData($_IPS[\'TARGET\']);');
     }
@@ -55,6 +58,19 @@ class SkodaAPI extends IPSModule
 
         // Conditionally maintain status variables according to configuration
         $this->MaintainVariables();
+
+        $this->SetVisualizationType(1);
+    }
+
+    public function GetVisualizationTile(): string
+    {
+        $file = __DIR__ . '/module.html';
+        if (!is_file($file)) {
+            return '<div>Visualization file not found</div>';
+        }
+
+        $content = file_get_contents($file);
+        return $content === false ? '<div>Visualization file could not be loaded</div>' : $content;
     }
 
     private function RegisterCustomProfiles(): void
@@ -209,6 +225,9 @@ class SkodaAPI extends IPSModule
 
         // 4. Forward routing arrays to dedicated Submodules
         $this->BroadcastToChildren($vehicle);
+
+        // 5. Push the full vehicle payload into the HTML visualization
+        $this->UpdateVisualizationValue('vehicle', $vehicle);
     }
 
     public function StartCharging(): bool
@@ -249,6 +268,24 @@ class SkodaAPI extends IPSModule
                 break;
             case 'BatteryCareModeTarget':
                 $this->SetChargingLimit((int)$Value);
+                break;
+            case 'StartCharging':
+                $this->StartCharging();
+                break;
+            case 'StopCharging':
+                $this->StopCharging();
+                break;
+            case 'SetChargeLimit':
+                $this->SetChargingLimit((int)$Value);
+                break;
+            case 'SetChargeMode':
+                $this->SetChargeMode((string)$Value);
+                break;
+            case 'StartAirConditioning':
+                $this->StartAirConditioning();
+                break;
+            case 'StopAirConditioning':
+                $this->StopAirConditioning();
                 break;
             default:
                 $this->SendDebug('RequestAction', 'Unhandled Ident: ' . $Ident, 0);
