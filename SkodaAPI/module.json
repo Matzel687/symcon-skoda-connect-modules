@@ -1,7 +1,7 @@
 {
   "id": "{A5129F78-831C-409B-B12D-9B1D2C345671}",
   "name": "Skoda API",
-  "type": 3,
+  "type": 2,
   "vendor": "Skoda",
   "aliases": [
     "Skoda API Submodule"
