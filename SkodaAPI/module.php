@@ -146,6 +146,8 @@ class SkodaAPI extends IPSModule
         $this->MaintainVariable('ChargingRateKmH', 'Ladegeschwindigkeit', 2, 'SKODA.ChargingRate', 24, $this->ReadPropertyBoolean('EnableVarChargeRate'));
         $this->MaintainVariable('MaxChargeCurrentAmpere', 'Max. Ladestrom AC', 1, 'SKODA.MaxChargeCurrentAcAmpere', 25, $this->ReadPropertyBoolean('EnableVarMaxCurrentAmpere'));
         $this->MaintainVariable('ChargingState', 'Ladezustand Status', 3, 'SKODA.ChargingState', 26, $this->ReadPropertyBoolean('EnableVarChargeState'));
+        $this->MaintainVariable('ChargeType', 'Ladeart', 3, 'SKODA.ChargingState', 27, $this->ReadPropertyBoolean('EnableVarChargeState'));
+        $this->MaintainVariable('FullyChargedAt', 'Vollständig geladen um', 3, '~String', 28, $this->ReadPropertyBoolean('EnableVarChargeState'));
         $this->MaintainVariable('OdometerKm', 'Kilometerstand', 1, 'SKODA.Odometer', 30, $this->ReadPropertyBoolean('EnableVarOdometer'));
     }
 
@@ -214,6 +216,12 @@ class SkodaAPI extends IPSModule
                 }
                 if ($this->ReadPropertyBoolean('EnableVarChargeState') && isset($cs['state'])) {
                     $this->SetValue('ChargingState', (string)$cs['state']);
+                }
+                if (isset($cs['chargeType'])) {
+                    $this->SetValue('ChargeType', (string)$cs['chargeType']);
+                }
+                if (isset($cs['fullyChargedAt'])) {
+                    $this->SetValue('FullyChargedAt', (string)$cs['fullyChargedAt']);
                 }
             }
         }

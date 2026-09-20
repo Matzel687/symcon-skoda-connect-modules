@@ -114,6 +114,8 @@
         <div class="row"><span class="label">Reichweite:</span><span class="value" id="val_ch_range">-</span></div>
         <div class="row"><span class="label">Leistung:</span><span class="value" id="val_ch_power">-</span></div>
         <div class="row"><span class="label">Ladegeschw.:</span><span class="value" id="val_ch_rate">-</span></div>
+        <div class="row"><span class="label">Ladeart:</span><span class="value" id="val_ch_type">-</span></div>
+        <div class="row"><span class="label">Vollgeladen:</span><span class="value" id="val_ch_fullyChargedAt">-</span></div>
         <div class="row"><span class="label">Ziel-SoC:</span><span class="value" id="val_ch_targetSoc">-</span></div>
         <div class="row"><span class="label">Battery Care:</span><span class="value" id="val_ch_batteryCareTarget">-</span></div>
         <div class="row"><span class="label">Lademodus:</span><span class="value" id="val_ch_preferredMode">-</span></div>
@@ -190,6 +192,8 @@
                     const status = ch.status;
                     document.getElementById('val_ch_power').innerText = status.chargePowerInKw !== undefined ? fmtValue(status.chargePowerInKw, 'kW') : '-';
                     document.getElementById('val_ch_rate').innerText = status.chargingRateInKilometersPerHour !== undefined ? fmtValue(status.chargingRateInKilometersPerHour, 'km/h') : '-';
+                    document.getElementById('val_ch_type').innerText = status.chargeType || '-';
+                    document.getElementById('val_ch_fullyChargedAt').innerText = fmtDate(status.fullyChargedAt);
                 }
                 if (ch.settings) {
                     const settings = ch.settings;
