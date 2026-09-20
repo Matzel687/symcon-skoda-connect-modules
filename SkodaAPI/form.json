@@ -161,7 +161,7 @@
 "caption": "Fernsteuerung & Befehle (Remote Actions)",
 "items": [
 {
-"type": "Row",
+"type": "RowLayout",
 "items": [
 {
 "type": "Button",
@@ -176,7 +176,7 @@
 ]
 },
 {
-"type": "Row",
+"type": "RowLayout",
 "items": [
 {
 "type": "Button",
