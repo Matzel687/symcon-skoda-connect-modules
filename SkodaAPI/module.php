@@ -256,7 +256,7 @@ class SkodaAPI extends IPSModule
         }
     }
 
-    public function ForwardData(string $JSONString): string
+    public function ForwardData($JSONString)
     {
         $data = json_decode($JSONString, true);
         $action = $data['action'] ?? '';
