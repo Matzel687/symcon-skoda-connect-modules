@@ -1,13 +1,13 @@
 {
 "elements": [
 {
-"type": "Section",
+"type": "ExpansionPanel",
 "caption": "API Zugangsdaten & Grundeinstellungen",
 "items": [
 {
-"type": "ValidationTextBox",
+"type": "PasswordTextBox",
 "name": "APIKey",
-"caption": "API Key / Token"
+"caption": "MyŠkoda API Key (aus der MyŠkoda App)"
 },
 {
 "type": "ValidationTextBox",
@@ -18,8 +18,8 @@
 "type": "NumberSpinner",
 "name": "UpdateInterval",
 "caption": "Aktualisierungsintervall",
-"minimum": 30,
-"maximum": 86400,
+"minimum": 300,
+"maximum": 3600,
 "suffix": "Sekunden"
 },
 {
