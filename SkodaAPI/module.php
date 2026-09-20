@@ -307,24 +307,36 @@ class SkodaAPI extends IPSModule
     {
         $vin = $this->ReadPropertyString('VIN');
 
-        $resource = null;
+        $endpoint = null;
         $requestBody = $payload;
 
         switch ($action) {
             case 'startCharging':
+                $endpoint = sprintf('%s/vehicles/%s/charging/start', self::API_BASE_URL, $vin);
+                $requestBody = [];
+                break;
+
             case 'stopCharging':
+                $endpoint = sprintf('%s/vehicles/%s/charging/stop', self::API_BASE_URL, $vin);
+                $requestBody = [];
+                break;
+
             case 'setChargingLimit':
+                $endpoint = sprintf('%s/vehicles/%s/charging/limit', self::API_BASE_URL, $vin);
+                break;
+
             case 'setChargeMode':
-                $resource = 'charging';
-                if (in_array($action, ['startCharging', 'stopCharging'], true)) {
-                    $requestBody = ['action' => $action === 'startCharging' ? 'start' : 'stop'];
-                }
+                $endpoint = sprintf('%s/vehicles/%s/charging/mode', self::API_BASE_URL, $vin);
                 break;
 
             case 'startAirConditioning':
+                $endpoint = sprintf('%s/vehicles/%s/air-conditioning/start', self::API_BASE_URL, $vin);
+                $requestBody = [];
+                break;
+
             case 'stopAirConditioning':
-                $resource = 'air-conditioning';
-                $requestBody = ['action' => $action === 'startAirConditioning' ? 'start' : 'stop'];
+                $endpoint = sprintf('%s/vehicles/%s/air-conditioning/stop', self::API_BASE_URL, $vin);
+                $requestBody = [];
                 break;
 
             default:
@@ -332,7 +344,6 @@ class SkodaAPI extends IPSModule
                 return false;
         }
 
-        $endpoint = sprintf('%s/%s/operation-requests?vin=%s', self::API_BASE_URL, $resource, $vin);
         $response = $this->FetchFromAPI($endpoint, 'POST', $requestBody);
         return $response !== null;
     }
