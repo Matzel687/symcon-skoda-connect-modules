@@ -1,0 +1,81 @@
+{
+  "elements": [
+    {
+      "type": "ValidationTextBox",
+      "name": "APIKey",
+      "caption": "API Key"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "VIN",
+      "caption": "Vehicle Identification Number (VIN)"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "UpdateInterval",
+      "caption": "Update Interval (Seconds)"
+    },
+    {
+      "type": "CheckBox",
+      "name": "SaveRenderUrlLocally",
+      "caption": "Save Vehicle Render Image Locally"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeInfo",
+      "caption": "info Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeStatus",
+      "caption": "status Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeFuelStatus",
+      "caption": "fuelStatus Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeOdometer",
+      "caption": "odometer Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeParkingPosition",
+      "caption": "parkingPosition Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeAirConditioning",
+      "caption": "airConditioning Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeAuxiliaryHeating",
+      "caption": "auxiliaryHeating Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeActiveVentilation",
+      "caption": "activeVentilation Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeCharging",
+      "caption": "charging Block abrufen"
+    },
+    {
+      "type": "CheckBox",
+      "name": "IncludeChargingProfiles",
+      "caption": "chargingProfiles Block abrufen"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Daten jetzt aktualisieren",
+      "onClick": "SKODA_UpdateData($id);"
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "{C7341B90-053E-621D-D34F-1D3F4E567893}",
+  "name": "Skoda Parking",
+  "type": 3,
+  "vendor": "Skoda",
+  "aliases": [
+    "Skoda Parking Submodule"
+  ],
+  "parentRequirements": [
+    "{A5129F78-831C-409B-B12D-9B1D2C345671}"
+  ],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "SKODAPARK"
+}

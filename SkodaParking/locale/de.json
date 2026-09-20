@@ -1,0 +1,9 @@
+{
+  "translations": {
+    "Park-Status (state)": "Park-Status (state)",
+    "Adresse (formattedAddress)": "Adresse (formattedAddress)",
+    "Breitengrad (latitude)": "Breitengrad (latitude)",
+    "Längengrad (longitude)": "Längengrad (longitude)",
+    "Erfassungszeitpunkt (carCapturedTimestamp)": "Erfassungszeitpunkt (carCapturedTimestamp)"
+  }
+}

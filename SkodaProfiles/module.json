@@ -1,0 +1,15 @@
+{
+  "id": "{D8452CA1-164F-732E-E450-2E4F5F678904}",
+  "name": "Skoda Profiles",
+  "type": 3,
+  "vendor": "Skoda",
+  "aliases": [
+    "Skoda Profiles Submodule"
+  ],
+  "parentRequirements": [
+    "{A5129F78-831C-409B-B12D-9B1D2C345671}"
+  ],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "SKODAPROF"
+}

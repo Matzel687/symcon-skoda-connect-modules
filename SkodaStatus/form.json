@@ -1,0 +1,10 @@
+{
+  "elements": [],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Daten jetzt aktualisieren",
+      "onClick": "SKODASTAT_UpdateData($id);"
+    }
+  ]
+}

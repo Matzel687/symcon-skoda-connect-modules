@@ -1,0 +1,18 @@
+{
+  "translations": {
+    "API Key": "API Key",
+    "Vehicle Identification Number (VIN)": "Vehicle Identification Number (VIN)",
+    "Update Interval (Seconds)": "Update Interval (Seconds)",
+    "Save Vehicle Render Image Locally": "Save Vehicle Render Image Locally",
+    "info Block abrufen": "info Block abrufen",
+    "status Block abrufen": "status Block abrufen",
+    "fuelStatus Block abrufen": "fuelStatus Block abrufen",
+    "odometer Block abrufen": "odometer Block abrufen",
+    "parkingPosition Block abrufen": "parkingPosition Block abrufen",
+    "airConditioning Block abrufen": "airConditioning Block abrufen",
+    "auxiliaryHeating Block abrufen": "auxiliaryHeating Block abrufen",
+    "activeVentilation Block abrufen": "activeVentilation Block abrufen",
+    "charging Block abrufen": "charging Block abrufen",
+    "chargingProfiles Block abrufen": "chargingProfiles Block abrufen"
+  }
+}

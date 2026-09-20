@@ -1,0 +1,15 @@
+{
+  "id": "{B6230A89-942D-510C-C23E-0C2E3D456782}",
+  "name": "Skoda Status",
+  "type": 3,
+  "vendor": "Skoda",
+  "aliases": [
+    "Skoda Status Submodule"
+  ],
+  "parentRequirements": [
+    "{A5129F78-831C-409B-B12D-9B1D2C345671}"
+  ],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "SKODASTAT"
+}

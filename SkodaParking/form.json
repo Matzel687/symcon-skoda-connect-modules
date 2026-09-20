@@ -1,0 +1,36 @@
+{
+  "elements": [
+    {
+      "type": "CheckBox",
+      "name": "EnableVarParkState",
+      "caption": "Park-Status (state)"
+    },
+    {
+      "type": "CheckBox",
+      "name": "EnableVarAddress",
+      "caption": "Adresse (formattedAddress)"
+    },
+    {
+      "type": "CheckBox",
+      "name": "EnableVarLatitude",
+      "caption": "Breitengrad (latitude)"
+    },
+    {
+      "type": "CheckBox",
+      "name": "EnableVarLongitude",
+      "caption": "Längengrad (longitude)"
+    },
+    {
+      "type": "CheckBox",
+      "name": "EnableVarCapturedTimestamp",
+      "caption": "Erfassungszeitpunkt (carCapturedTimestamp)"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Button",
+      "caption": "Daten jetzt aktualisieren",
+      "onClick": "SKODAPARK_UpdateData($id);"
+    }
+  ]
+}
