@@ -1,81 +1,213 @@
 {
-  "elements": [
-    {
-      "type": "ValidationTextBox",
-      "name": "APIKey",
-      "caption": "API Key"
-    },
-    {
-      "type": "ValidationTextBox",
-      "name": "VIN",
-      "caption": "Vehicle Identification Number (VIN)"
-    },
-    {
-      "type": "NumberSpinner",
-      "name": "UpdateInterval",
-      "caption": "Update Interval (Seconds)"
-    },
-    {
-      "type": "CheckBox",
-      "name": "SaveRenderUrlLocally",
-      "caption": "Save Vehicle Render Image Locally"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeInfo",
-      "caption": "info Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeStatus",
-      "caption": "status Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeFuelStatus",
-      "caption": "fuelStatus Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeOdometer",
-      "caption": "odometer Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeParkingPosition",
-      "caption": "parkingPosition Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeAirConditioning",
-      "caption": "airConditioning Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeAuxiliaryHeating",
-      "caption": "auxiliaryHeating Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeActiveVentilation",
-      "caption": "activeVentilation Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeCharging",
-      "caption": "charging Block abrufen"
-    },
-    {
-      "type": "CheckBox",
-      "name": "IncludeChargingProfiles",
-      "caption": "chargingProfiles Block abrufen"
-    }
-  ],
-  "actions": [
-    {
-      "type": "Button",
-      "caption": "Daten jetzt aktualisieren",
-      "onClick": "SKODA_UpdateData($id);"
-    }
-  ]
+"elements": [
+{
+"type": "Section",
+"caption": "API Zugangsdaten & Grundeinstellungen",
+"items": [
+{
+"type": "ValidationTextBox",
+"name": "APIKey",
+"caption": "API Key / Token"
+},
+{
+"type": "ValidationTextBox",
+"name": "VIN",
+"caption": "Fahrzeug-Identifizierungsnummer (FIN / VIN)"
+},
+{
+"type": "NumberSpinner",
+"name": "UpdateInterval",
+"caption": "Aktualisierungsintervall",
+"minimum": 30,
+"maximum": 86400,
+"suffix": "Sekunden"
+},
+{
+"type": "CheckBox",
+"name": "SaveRenderUrlLocally",
+"caption": "Fahrzeuggrafik (Render URL) lokal auf dem Symcon-Server speichern"
+}
+]
+},
+{
+"type": "ExpansionPanel",
+"caption": "API JSON-Blöcke (Include-Optionen)",
+"items": [
+{
+"type": "Label",
+"caption": "Bestimmen Sie, welche Daten-Objekte von der ŠKODA Connect API abgefragt werden sollen:"
+},
+{
+"type": "CheckBox",
+"name": "IncludeInfo",
+"caption": "info (Fahrzeugmodell, Spezifikationen & Stammdaten)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeStatus",
+"caption": "status (Verriegelungszustand, Türen, Fenster, Licht)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeFuelStatus",
+"caption": "fuelStatus (Kraftstoff- u. Tankfüllstände)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeOdometer",
+"caption": "odometer (Gesamtkilometerstand)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeParkingPosition",
+"caption": "parkingPosition (GPS-Koordinaten & Adressdaten)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeAirConditioning",
+"caption": "airConditioning (Klimatisierung & Scheibenheizung)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeAuxiliaryHeating",
+"caption": "auxiliaryHeating (Standheizung & Lüftung)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeActiveVentilation",
+"caption": "activeVentilation (Aktive Belüftung)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeCharging",
+"caption": "charging (Batterieladezustand, Ladeleistung & Timer)"
+},
+{
+"type": "CheckBox",
+"name": "IncludeChargingProfiles",
+"caption": "chargingProfiles (Konfigurierte Ladeprofile)"
+}
+]
+},
+{
+"type": "ExpansionPanel",
+"caption": "Status-Variablen im Hauptmodul",
+"items": [
+{
+"type": "Label",
+"caption": "Aktivieren Sie die Statusvariablen, die direkt unter der Hauptinstanz angelegt werden sollen:"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarAirConState",
+"caption": "Klimatisierung Status (AirConState)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarTargetTemp",
+"caption": "Soll-Temperatur (TargetTemperature)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarSoC",
+"caption": "Batterie Ladezustand % (StateOfCharge)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarBatteryCareSoC",
+"caption": "Battery Care Zielwert % (BatteryCareModeTarget)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarRangeKm",
+"caption": "Verbleibende Reichweite km (CruisingRangeKm)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarChargePower",
+"caption": "Ladeleistung kW (ChargePowerKw)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarChargeRate",
+"caption": "Ladegeschwindigkeit km/h (ChargingRateKmH)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarMaxCurrentAmpere",
+"caption": "Max. Ladestrom AC Ampere (MaxChargeCurrentAmpere)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarChargeState",
+"caption": "Ladezustand Status (ChargingState)"
+},
+{
+"type": "CheckBox",
+"name": "EnableVarOdometer",
+"caption": "Kilometerstand km (OdometerKm)"
+}
+]
+}
+],
+"actions": [
+{
+"type": "Button",
+"caption": "Daten jetzt von API aktualisieren",
+"onClick": "SKODA_UpdateData($id);"
+},
+{
+"type": "Section",
+"caption": "Fernsteuerung & Befehle (Remote Actions)",
+"items": [
+{
+"type": "Row",
+"items": [
+{
+"type": "Button",
+"caption": "⚡ Ladevorgang starten",
+"onClick": "SKODA_StartCharging($id);"
+},
+{
+"type": "Button",
+"caption": "🛑 Ladevorgang stoppen",
+"onClick": "SKODA_StopCharging($id);"
+}
+]
+},
+{
+"type": "Row",
+"items": [
+{
+"type": "Button",
+"caption": "❄️ Klimatisierung starten",
+"onClick": "SKODA_StartAirConditioning($id);"
+},
+{
+"type": "Button",
+"caption": "🔥 Klimatisierung stoppen",
+"onClick": "SKODA_StopAirConditioning($id);"
+}
+]
+}
+]
+}
+],
+"status": [
+{
+"code": 102,
+"icon": "active",
+"caption": "Instanz ist aktiv und kommuniziert mit der Škoda Connect API"
+},
+{
+"code": 201,
+"icon": "error",
+"caption": "API Key oder FIN/VIN fehlt in der Konfiguration"
+},
+{
+"code": 202,
+"icon": "error",
+"caption": "Verbindung zur Škoda Connect API fehlgeschlagen"
+}
+]
 }

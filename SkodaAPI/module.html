@@ -3,15 +3,192 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Skoda API</title>
+    <title>Skoda Vehicle Main Tile</title>
     <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; margin: 0; padding: 12px; background: transparent; color: #fff; }
-        .card { background: rgba(255, 255, 255, 0.05); border-radius: 8px; padding: 12px; text-align: center; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, monospace;
+            margin: 0;
+            padding: 12px;
+            background: transparent;
+            color: #f1f5f9;
+            font-size: 12px;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            background: rgba(15, 23, 42, 0.85);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+            border-radius: 8px;
+            padding: 12px;
+        }
+        .title {
+            font-size: 14px;
+            font-weight: bold;
+            color: #38bdf8;
+            border-b: 1px solid #334155;
+            padding-bottom: 6px;
+            margin-bottom: 4px;
+        }
+        .section-header {
+            font-weight: bold;
+            color: #34d399;
+            margin-top: 6px;
+            text-transform: uppercase;
+            font-size: 11px;
+            letter-spacing: 0.5px;
+        }
+        .row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px dashed rgba(51, 65, 85, 0.5);
+            padding: 3px 0;
+        }
+        .label {
+            color: #94a3b8;
+        }
+        .value {
+            color: #f8fafc;
+            font-weight: 500;
+            text-align: right;
+        }
+        .tooltip {
+            cursor: help;
+            border-bottom: 1px dotted #94a3b8;
+        }
+        .render-img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 6px;
+            margin-top: 8px;
+            border: 1px solid #334155;
+        }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h3>Skoda API Tile Visu</h3>
+    <div class="container">
+        <div class="title" id="carTitle">Škoda Fahrzeugübersicht</div>
+        <img id="renderUrlImg" class="render-img" src="" style="display:none;" alt="Vehicle Render">
+
+        <!-- General Vehicle Info -->
+        <div class="section-header">Stammdaten</div>
+        <div class="row"><span class="label">Fahrzeug Name:</span><span class="value" id="val_name">-</span></div>
+        <div class="row"><span class="label">Kennzeichen:</span><span class="value" id="val_licensePlate">-</span></div>
+        <div class="row"><span class="label">VIN:</span><span class="value" id="val_vin">-</span></div>
+        <div class="row"><span class="label">Kilometerstand:</span><span class="value" id="val_odometer">-</span></div>
+
+        <!-- Air Conditioning -->
+        <div class="section-header">Klimatisierung (airConditioning)</div>
+        <div class="row"><span class="label">Status (state):</span><span class="value" id="val_ac_state">-</span></div>
+        <div class="row"><span class="label">Ziel-Temperatur:</span><span class="value" id="val_ac_targetTemp">-</span></div>
+        <div class="row"><span class="label">Erreichen Ziel-Temp. (Uhrzeit):</span><span class="value" id="val_ac_reachTime">-</span></div>
+        <div class="row"><span class="label">Ohne externe Stromversorgung:</span><span class="value" id="val_ac_noExtPower">-</span></div>
+        <div class="row">
+            <span class="label tooltip" title="true = startet automatisch beim Entriegeln / false = startet nicht automatisch">Bei Entriegeln (airConditioningAtUnlock):</span>
+            <span class="value" id="val_ac_atUnlock">-</span>
+        </div>
+        <div class="row"><span class="label">Frontscheibenheizung:</span><span class="value" id="val_ac_winFront">-</span></div>
+        <div class="row"><span class="label">Heckscheibenheizung:</span><span class="value" id="val_ac_winRear">-</span></div>
+        <div class="row"><span class="label">Erfassungszeitpunkt (Klima):</span><span class="value" id="val_ac_captured">-</span></div>
+
+        <!-- Charging -->
+        <div class="section-header">Ladevorgang & Batterie (charging)</div>
+        <div class="row"><span class="label">An gespeichertem Standort:</span><span class="value" id="val_ch_isSavedLoc">-</span></div>
+        <div class="row"><span class="label">Lade-Status (state):</span><span class="value" id="val_ch_state">-</span></div>
+        <div class="row"><span class="label">Batterie Ladezustand (SoC):</span><span class="value" id="val_ch_soc">-</span></div>
+        <div class="row"><span class="label">Verbleibende Reichweite:</span><span class="value" id="val_ch_range">-</span></div>
+        <div class="row"><span class="label">Ladeleistung (chargePowerInKw):</span><span class="value" id="val_ch_power">-</span></div>
+        <div class="row"><span class="label">Ladegeschwindigkeit (km/h):</span><span class="value" id="val_ch_rate">-</span></div>
+        <div class="row"><span class="label">Ladetyp (chargeType):</span><span class="value" id="val_ch_type">-</span></div>
+        <div class="row"><span class="label">Vollständig geladen um:</span><span class="value" id="val_ch_fullyChargedAt">-</span></div>
+        <div class="row"><span class="label">Verbleibende Ladezeit (Minuten):</span><span class="value" id="val_ch_remainingMinutes">-</span></div>
+        <div class="row"><span class="label">Ziel-Ladezustand (SoC):</span><span class="value" id="val_ch_targetSoc">-</span></div>
+        <div class="row"><span class="label">Battery Care Mode Zielwert:</span><span class="value" id="val_ch_batteryCareTarget">-</span></div>
+        <div class="row"><span class="label">Charging Care Mode:</span><span class="value" id="val_ch_careMode">-</span></div>
+        <div class="row"><span class="label">Max. Ladestrom AC (maxChargeCurrentAc):</span><span class="value" id="val_ch_maxCurrentAc">-</span></div>
+        <div class="row"><span class="label">Max. Ladestrom (Ampere):</span><span class="value" id="val_ch_maxCurrentAmpere">-</span></div>
+        <div class="row"><span class="label">Bevorzugter Lademodus:</span><span class="value" id="val_ch_preferredMode">-</span></div>
+        <div class="row"><span class="label">Stecker automatisch entriegeln:</span><span class="value" id="val_ch_autoUnlockPlug">-</span></div>
+        <div class="row"><span class="label">Erfassungszeitpunkt (Laden):</span><span class="value" id="val_ch_captured">-</span></div>
+
+        <!-- Operations List -->
+        <div class="section-header">Verfügbare Remote-Aktionen (operations)</div>
+        <div class="row"><span class="label">Aktive Befehle:</span><span class="value" id="val_operations">-</span></div>
     </div>
+
+    <script>
+        function updateTileData(data) {
+            if (!data) return;
+
+            // General
+            document.getElementById('val_name').innerText = data.name || '-';
+            document.getElementById('val_licensePlate').innerText = data.licensePlate || '-';
+            document.getElementById('val_vin').innerText = data.vin || '-';
+            if (data.odometer) {
+                document.getElementById('val_odometer').innerText = data.odometer.mileageInKm + ' km';
+            }
+            if (data.renderUrl) {
+                const img = document.getElementById('renderUrlImg');
+                img.src = data.renderUrl;
+                img.style.display = 'block';
+            }
+
+            // AirConditioning
+            if (data.airConditioning) {
+                const ac = data.airConditioning;
+                document.getElementById('val_ac_state').innerText = ac.state || '-';
+                if (ac.targetTemperature) {
+                    document.getElementById('val_ac_targetTemp').innerText = ac.targetTemperature.value + ' ' + (ac.targetTemperature.unit === 'CELSIUS' ? '°C' : ac.targetTemperature.unit);
+                }
+                document.getElementById('val_ac_reachTime').innerText = ac.estimatedReachOfTargetTemperatureAt ? new Date(ac.estimatedReachOfTargetTemperatureAt).toLocaleTimeString() : '-';
+                document.getElementById('val_ac_noExtPower').innerText = ac.airConditioningWithoutExternalPower !== undefined ? ac.airConditioningWithoutExternalPower : '-';
+                document.getElementById('val_ac_atUnlock').innerText = ac.airConditioningAtUnlock !== undefined ? ac.airConditioningAtUnlock : '-';
+                if (ac.windowHeating) {
+                    document.getElementById('val_ac_winFront').innerText = ac.windowHeating.front || '-';
+                    document.getElementById('val_ac_winRear').innerText = ac.windowHeating.rear || '-';
+                }
+                document.getElementById('val_ac_captured').innerText = ac.carCapturedTimestamp ? new Date(ac.carCapturedTimestamp).toLocaleString() : '-';
+            }
+
+            // Charging
+            if (data.charging) {
+                const ch = data.charging;
+                document.getElementById('val_ch_isSavedLoc').innerText = ch.isVehicleInSavedLocation !== undefined ? ch.isVehicleInSavedLocation : '-';
+                document.getElementById('val_ch_captured').innerText = ch.carCapturedTimestamp ? new Date(ch.carCapturedTimestamp).toLocaleString() : '-';
+
+                if (ch.status) {
+                    const st = ch.status;
+                    document.getElementById('val_ch_state').innerText = st.state || '-';
+                    if (st.battery) {
+                        document.getElementById('val_ch_soc').innerText = st.battery.stateOfChargeInPercent + ' %';
+                        document.getElementById('val_ch_range').innerText = (st.battery.remainingCruisingRangeInMeters / 1000).toFixed(1) + ' km';
+                    }
+                    document.getElementById('val_ch_power').innerText = st.chargePowerInKw + ' kW';
+                    document.getElementById('val_ch_rate').innerText = st.chargingRateInKilometersPerHour + ' km/h';
+                    document.getElementById('val_ch_type').innerText = st.chargeType || '-';
+                    document.getElementById('val_ch_fullyChargedAt').innerText = st.fullyChargedAt ? new Date(st.fullyChargedAt).toLocaleString() : '-';
+                    document.getElementById('val_ch_remainingMinutes').innerText = st.remainingTimeToFullyChargedInMinutes + ' min';
+                }
+
+                if (ch.settings) {
+                    const set = ch.settings;
+                    document.getElementById('val_ch_targetSoc').innerText = set.targetStateOfChargeInPercent + ' %';
+                    document.getElementById('val_ch_batteryCareTarget').innerText = set.batteryCareModeTargetValueInPercent + ' %';
+                    document.getElementById('val_ch_careMode').innerText = set.chargingCareMode || '-';
+                    document.getElementById('val_ch_maxCurrentAc').innerText = set.maxChargeCurrentAc || '-';
+                    document.getElementById('val_ch_maxCurrentAmpere').innerText = set.maxChargeCurrentAcAmpere + ' A';
+                    document.getElementById('val_ch_preferredMode').innerText = set.preferredChargeMode || '-';
+                    document.getElementById('val_ch_autoUnlockPlug').innerText = set.autoUnlockPlugWhenCharged || '-';
+                }
+            }
+
+            // Operations
+            if (data.operations && Array.isArray(data.operations)) {
+                const ops = data.operations.map(o => o.name).join(', ');
+                document.getElementById('val_operations').innerText = ops || '-';
+            }
+        }
+    </script>
 </body>
 </html>
