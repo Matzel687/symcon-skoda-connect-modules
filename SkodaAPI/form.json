@@ -157,7 +157,7 @@
 "onClick": "SKODA_UpdateData($id);"
 },
 {
-"type": "Section",
+"type": "ExpansionPanel",
 "caption": "Fernsteuerung & Befehle (Remote Actions)",
 "items": [
 {
