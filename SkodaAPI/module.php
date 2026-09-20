@@ -227,7 +227,7 @@ class SkodaAPI extends IPSModule
         $this->BroadcastToChildren($vehicle);
 
         // 5. Push the full vehicle payload into the HTML visualization
-        $this->UpdateVisualizationValue($vehicle);
+        $this->UpdateVisualizationValue(json_encode($vehicle, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES));
     }
 
     public function StartCharging(): bool
