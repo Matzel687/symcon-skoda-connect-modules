@@ -97,6 +97,11 @@
         <div class="section-header">Klimatisierung</div>
         <div class="row"><span class="label">Status:</span><span class="value" id="val_ac_state">-</span></div>
         <div class="row"><span class="label">Zieltemp.:</span><span class="value" id="val_ac_targetTemp">-</span></div>
+        <div class="row" style="display:flex; align-items:center; gap:6px;">
+            <span class="label">Neu:</span>
+            <input id="acTargetInput" type="number" min="16" max="30" step="0.5" value="21" style="width:70px; border-radius:4px; border:1px solid rgba(148,163,184,0.5); background:rgba(15,23,42,0.8); color:#e2e8f0; padding:3px 6px;" />
+            <button class="btn" type="button" onclick="requestAction('TargetTemperature', parseFloat(document.getElementById('acTargetInput').value))">Setzen</button>
+        </div>
         <div class="row"><span class="label">Erreichen:</span><span class="value" id="val_ac_reachTime">-</span></div>
         <div class="row"><span class="label">Ohne Ext. Strom:</span><span class="value" id="val_ac_noExtPower">-</span></div>
         <div class="row"><span class="label">Bei Entriegeln:</span><span class="value" id="val_ac_atUnlock">-</span></div>
@@ -162,6 +167,7 @@
                     const temp = ac.targetTemperature.value;
                     const unit = ac.targetTemperature.unit === 'CELSIUS' ? '°C' : (ac.targetTemperature.unit || '');
                     document.getElementById('val_ac_targetTemp').innerText = fmtValue(temp, unit);
+                    document.getElementById('acTargetInput').value = Number(temp);
                 }
                 document.getElementById('val_ac_reachTime').innerText = fmtDate(ac.estimatedReachOfTargetTemperatureAt);
                 document.getElementById('val_ac_noExtPower').innerText = ac.airConditioningWithoutExternalPower !== undefined ? String(ac.airConditioningWithoutExternalPower) : '-';

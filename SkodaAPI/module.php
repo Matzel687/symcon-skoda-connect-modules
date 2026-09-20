@@ -250,9 +250,32 @@ class SkodaAPI extends IPSModule
         return $this->ExecuteRemoteAction('setChargeMode', ['chargeMode' => $mode]);
     }
 
+    public function SetTargetTemperature(float $temperature): bool
+    {
+        $temperature = max(16.0, min(30.0, $temperature));
+        $this->SetValue('TargetTemperature', $temperature);
+
+        $payload = [
+            'targetTemperature' => [
+                'value' => $temperature,
+                'unit' => 'CELSIUS'
+            ],
+            'airConditioningWithoutExternalPower' => true
+        ];
+
+        return $this->ExecuteRemoteAction('startAirConditioning', $payload);
+    }
+
     public function StartAirConditioning(): bool
     {
-        return $this->ExecuteRemoteAction('startAirConditioning');
+        $temperature = (float)$this->GetValue('TargetTemperature');
+        if ($temperature > 0) {
+            return $this->SetTargetTemperature($temperature);
+        }
+
+        return $this->ExecuteRemoteAction('startAirConditioning', [
+            'airConditioningWithoutExternalPower' => true
+        ]);
     }
 
     public function StopAirConditioning(): bool
@@ -264,7 +287,7 @@ class SkodaAPI extends IPSModule
     {
         switch ($Ident) {
             case 'TargetTemperature':
-                $this->SetValue($Ident, $Value);
+                $this->SetTargetTemperature((float)$Value);
                 break;
             case 'BatteryCareModeTarget':
                 $this->SetChargingLimit((int)$Value);
@@ -313,12 +336,12 @@ class SkodaAPI extends IPSModule
         switch ($action) {
             case 'startCharging':
                 $endpoint = sprintf('%s/vehicles/%s/charging/start', self::API_BASE_URL, $vin);
-                $requestBody = [];
+                $requestBody = empty($payload) ? [] : $payload;
                 break;
 
             case 'stopCharging':
                 $endpoint = sprintf('%s/vehicles/%s/charging/stop', self::API_BASE_URL, $vin);
-                $requestBody = [];
+                $requestBody = empty($payload) ? [] : $payload;
                 break;
 
             case 'setChargingLimit':
@@ -331,12 +354,12 @@ class SkodaAPI extends IPSModule
 
             case 'startAirConditioning':
                 $endpoint = sprintf('%s/vehicles/%s/air-conditioning/start', self::API_BASE_URL, $vin);
-                $requestBody = [];
+                $requestBody = empty($payload) ? [] : $payload;
                 break;
 
             case 'stopAirConditioning':
                 $endpoint = sprintf('%s/vehicles/%s/air-conditioning/stop', self::API_BASE_URL, $vin);
-                $requestBody = [];
+                $requestBody = empty($payload) ? [] : $payload;
                 break;
 
             default:
