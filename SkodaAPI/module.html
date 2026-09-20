@@ -143,6 +143,25 @@
             return Number.isNaN(d.getTime()) ? value : d.toLocaleString();
         }
 
+        function restoreCachedVehicle() {
+            try {
+                const cached = localStorage.getItem('skodaVehiclePayload');
+                if (!cached) {
+                    return;
+                }
+                const payload = JSON.parse(cached);
+                if (payload && payload.vehicle) {
+                    renderVehicle(payload.vehicle);
+                    return;
+                }
+                if (payload) {
+                    renderVehicle(payload);
+                }
+            } catch (e) {
+                // Ignore cache parse errors and fall back to empty state.
+            }
+        }
+
         function renderVehicle(vehicle) {
             if (!vehicle) {
                 return;
@@ -216,21 +235,29 @@
 
             if (payload && payload.vehicle) {
                 renderVehicle(payload.vehicle);
+                localStorage.setItem('skodaVehiclePayload', JSON.stringify(payload));
                 return;
             }
 
             if (payload && payload.value && payload.value.vehicle) {
                 renderVehicle(payload.value.vehicle);
+                localStorage.setItem('skodaVehiclePayload', JSON.stringify(payload.value));
                 return;
             }
 
             if (payload && payload.value) {
                 renderVehicle(payload.value);
+                localStorage.setItem('skodaVehiclePayload', JSON.stringify(payload.value));
                 return;
             }
 
             renderVehicle(payload);
+            if (payload) {
+                localStorage.setItem('skodaVehiclePayload', JSON.stringify(payload));
+            }
         }
+
+        restoreCachedVehicle();
     </script>
 </body>
 </html>
