@@ -306,9 +306,34 @@ class SkodaAPI extends IPSModule
     private function ExecuteRemoteAction(string $action, array $payload = []): bool
     {
         $vin = $this->ReadPropertyString('VIN');
-        $endpoint = sprintf('%s/vehicles/%s/operations/%s', self::API_BASE_URL, $vin, $action);
 
-        $response = $this->FetchFromAPI($endpoint, 'POST', $payload);
+        $resource = null;
+        $requestBody = $payload;
+
+        switch ($action) {
+            case 'startCharging':
+            case 'stopCharging':
+            case 'setChargingLimit':
+            case 'setChargeMode':
+                $resource = 'charging';
+                if (in_array($action, ['startCharging', 'stopCharging'], true)) {
+                    $requestBody = ['action' => $action === 'startCharging' ? 'start' : 'stop'];
+                }
+                break;
+
+            case 'startAirConditioning':
+            case 'stopAirConditioning':
+                $resource = 'air-conditioning';
+                $requestBody = ['action' => $action === 'startAirConditioning' ? 'start' : 'stop'];
+                break;
+
+            default:
+                $this->SendDebug('Remote Action', 'Unsupported action: ' . $action, 0);
+                return false;
+        }
+
+        $endpoint = sprintf('%s/%s/operation-requests?vin=%s', self::API_BASE_URL, $resource, $vin);
+        $response = $this->FetchFromAPI($endpoint, 'POST', $requestBody);
         return $response !== null;
     }
 
